@@ -1,0 +1,804 @@
+@charset "UTF-8";
+
+/* =====================================================
+   PROMÌNNÉ
+   ===================================================== */
+:root {
+    --color-transparent: transparent;
+    --color-white: #fff;
+    --color-light: #F8F5F1;
+    --color-medium: #EAE6DF;
+    --color-pulse-red: #B71234;
+    --color-rose-red: #F1D0D6;
+    --color-medical-blue: #3DB7E4;
+    --color-skin-beige: #F1CDAF;
+    --color-heart-red: #5E172D;
+    --color-bandage-white: #EAE6DF;
+    --color-urgent-blue: #003145;
+    --color-urgent-blue-60: #66838F;
+    --color-urgent-blue-10: #E5EAEC;
+}
+
+/* =====================================================
+   GLOBÁLNÍ RESET PRO TAC PRVKY
+   ===================================================== */
+#tarteaucitron * {
+    font-family: 'Fira Sans', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    -webkit-font-smoothing: antialiased;
+    color: var(--color-urgent-blue);
+}
+
+#tarteaucitronRoot ul {
+    padding: 0;
+    list-style: none;
+}
+
+.tarteaucitronDetails.tarteaucitronInfoBox {
+    display: none;
+}
+
+.tarteaucitronH3 {
+    display: block;
+}
+
+/* =====================================================
+   BACKDROP
+   ===================================================== */
+#tarteaucitronBack {
+    background: #000;
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2147483646;
+    pointer-events: none !important;
+}
+
+/* =====================================================
+   HLAVNÍ MODAL
+   ===================================================== */
+#tarteaucitron {
+    display: none;
+    position: fixed;
+    left: 50% !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    padding: 0;
+    width: 860px !important;
+    max-width: 95%;
+    max-height: 85vh;
+    z-index: 2147483647;
+    background: #fff;
+    border-radius: 16px;
+    border: 0;
+    flex-direction: column;
+}
+
+#tarteaucitron[style*="display: block"],
+#tarteaucitron[style*="opacity: 1"] {
+    display: flex !important;
+    flex-direction: column;
+    left: 50% !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+/* =====================================================
+   CLOSE BUTTON
+   ===================================================== */
+#tarteaucitronClosePanel {
+    background: transparent;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 5px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border: none;
+    z-index: 15;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    line-height: 1;
+    font-size: 0;
+}
+
+#tarteaucitronClosePanel::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-urgent-blue);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='9' fill='none' stroke='black' stroke-width='1.5'/%3E%3Cline x1='6' y1='6' x2='14' y2='14' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='14' y1='6' x2='6' y2='14' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='9' fill='none' stroke='black' stroke-width='1.5'/%3E%3Cline x1='6' y1='6' x2='14' y2='14' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='14' y1='6' x2='6' y2='14' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 20px 20px;
+    mask-size: 20px 20px;
+}
+
+#tarteaucitronClosePanel:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* =====================================================
+   HEADER – layout
+   ===================================================== */
+.tarteaucitronMainLine {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tac-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+}
+
+.tac-header-top .tarteaucitronH1 {
+    font-weight: 700;
+}
+
+.tac-header-logo {
+    height: 40px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+#tarteaucitronInfo {
+    display: none !important;
+}
+
+.tarteaucitronMainLine .tarteaucitronName,
+.tarteaucitronMainLine .tarteaucitronAsk {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.tarteaucitronMainLine .tarteaucitronName {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+}
+
+.tarteaucitronMainLine .tarteaucitronH2 {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.tarteaucitronMainLine .tarteaucitronAsk {
+    flex: 0 0 auto;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.tac-header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    width: 100%;
+}
+
+.tarteaucitronMainLine .tarteaucitronAsk button {
+    background: #fbd600;
+    color: #000;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border: 0;
+    white-space: nowrap;
+}
+
+.tarteaucitronMainLine .tarteaucitronAsk button:hover {
+    background: #e5c400;
+}
+
+/* =====================================================
+   #tarteaucitronServices
+   ===================================================== */
+#tarteaucitronServices {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+#tarteaucitronServices[style*="height"] {
+    height: auto !important;
+}
+
+/* =====================================================
+   BODY – scrollovatelná èást
+   ===================================================== */
+#tarteaucitronServices > .tarteaucitronBorder {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0px -23px;
+    padding: 0 23px;
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+#tarteaucitronSave {
+    flex: 0 0 auto;
+    padding: 15px 20px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    border-radius: 0 0 8px 8px;
+    position: relative;
+    z-index: 10;
+}
+
+#tarteaucitronSaveButton {
+    background: #0a364f;
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border: 0;
+}
+
+#tarteaucitronSaveButton:hover {
+    background: #0c4059;
+}
+
+.tac-footer-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.tac-btn {
+    padding: 12px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    border: 0;
+    background-color: var(--color-bandage-white) !important;
+    color: var(--color-urgent-blue);
+    transition: 0.2s ease;
+}
+
+.tac-btn:hover {
+    background-color: var(--color-urgent-blue) !important;
+    color: var(--color-bandage-white) !important;
+    font-weight: 500;
+}
+
+/* =====================================================
+   KATEGORIE – tituly
+   ===================================================== */
+.tarteaucitronHidden {
+    display: none !important;
+}
+
+.tarteaucitronTitle {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0;
+    margin: 0;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: block;
+}
+
+.tarteaucitronTitle button {
+    width: 100%;
+    text-align: left;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    border: 0;
+}
+
+.tarteaucitronTitle button:hover {
+    background: #f0f0f0;
+}
+
+.tarteaucitronPlus {
+    margin-right: 10px;
+}
+
+.tarteaucitronPlus::before {
+    content: '›';
+    display: inline-block;
+    transition: transform 0.3s;
+    background: transparent;
+}
+
+.tarteaucitronTitle button[aria-expanded="true"] .tarteaucitronPlus::before {
+    transform: rotate(90deg);
+}
+
+/* =====================================================
+   ØÁDKY SLUŽEB
+   ===================================================== */
+.tarteaucitronLine {
+    background: #fff;
+    border-left: 4px solid transparent;
+    border-bottom: 0;
+    border-radius: 16px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#tarteaucitronServices .tarteaucitronLine:hover {
+    background: #f9f9f9;
+}
+
+.tarteaucitronLine .tarteaucitronName {
+    flex: 1;
+    min-width: 300px;
+}
+
+.tarteaucitronH3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    background: transparent;
+}
+
+/* =====================================================
+   FIX: Zobrazit neprázdné kategorie
+   ===================================================== */
+li[id^="tarteaucitronServicesTitle_"][style*="display: block"].tarteaucitronHidden {
+    display: block !important;
+}
+
+#tarteaucitronServicesTitle_api[style*="display: block"],
+#tarteaucitronServicesTitle_video[style*="display: block"],
+#tarteaucitronServicesTitle_analytic[style*="display: block"],
+#tarteaucitronServicesTitle_social[style*="display: block"],
+#tarteaucitronServicesTitle_ads[style*="display: block"],
+#tarteaucitronServicesTitle_other[style*="display: block"],
+#tarteaucitronServicesTitle_comment[style*="display: block"],
+#tarteaucitronServicesTitle_support[style*="display: block"],
+#tarteaucitronServicesTitle_google[style*="display: block"] {
+    display: block !important;
+}
+
+/* =====================================================
+   ROZBALENÁ KATEGORIE
+   ===================================================== */
+#tarteaucitronRoot li.tarteaucitronIsExpanded {
+    margin-bottom: 20px;
+}
+
+#tarteaucitronRoot li.tarteaucitronIsExpanded,
+#tarteaucitronRoot li.tarteaucitronIsExpanded .tarteaucitronTitle,
+#tarteaucitronRoot li.tarteaucitronIsExpanded .tarteaucitronTitle button,
+#tarteaucitronRoot li.tarteaucitronIsExpanded > ul,
+#tarteaucitronRoot li.tarteaucitronIsExpanded .tarteaucitronLine {
+    border-radius: 16px;
+    background-color: var(--color-light) !important;
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+@media screen and (max-width: 767px) {
+    #tarteaucitron {
+        width: 100% !important;
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        border-radius: 0;
+        max-width: 100%;
+        max-height: 100vh;
+    }
+
+    .tarteaucitronLine {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tarteaucitronAsk {
+        width: 100%;
+        margin: 10px 0 0 0;
+        justify-content: flex-start;
+    }
+}
+
+/* =====================================================
+   TLAÈÍTKO "Spravovat služby" – skrýt vizuálnì
+   ===================================================== */
+.tarteaucitron-toggle-group {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* =====================================================
+   ŠIPKA U NÁZVU KATEGORIE
+   ===================================================== */
+.tarteaucitronLine:has(.tarteaucitron-toggle-group) {
+    cursor: pointer;
+}
+
+.tarteaucitronLine:has(.tarteaucitron-toggle-group) .tarteaucitronName {
+    cursor: pointer;
+}
+
+.tarteaucitronLine:has(.tarteaucitron-toggle-group) .tarteaucitronH3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tarteaucitronLine:has(.tarteaucitron-toggle-group) .tarteaucitronH3::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23003145' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.25s ease;
+}
+
+.tarteaucitronLine.category-expanded:has(.tarteaucitron-toggle-group) .tarteaucitronH3::before {
+    transform: rotate(90deg);
+}
+
+/* =====================================================
+   TABY
+   ===================================================== */
+.tac-tabs-wrapper {
+    flex: 0 0 auto;
+    background: #fff;
+    padding: 16px 0;
+}
+
+.tac-nav-tabs {
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+    display: flex;
+    gap: 4px;
+    background-color: var(--color-bandage-white);
+    border-radius: 99px;
+}
+
+.tac-tab-btn {
+    flex: 1;
+    text-align: center;
+    color: var(--color-urgent-blue-60);
+    padding: 10px 16px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.2s ease;
+    border-radius: 99px;
+    font-size: 15px;
+}
+
+.tac-tab-btn:hover {
+    color: var(--color-urgent-blue);
+    background-color: #fff;
+}
+
+.tac-tab-btn--active {
+    color: var(--color-urgent-blue);
+    font-weight: 600;
+    background-color: #fff;
+}
+
+/* =====================================================
+   O COOKIES – panel
+   ===================================================== */
+.tac-about-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 24px 20px;
+    background: #fff;
+}
+
+.tac-about-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-urgent-blue);
+    max-width: 640px;
+    background: transparent;
+}
+
+/* =====================================================
+   SKRÝT nepotøebné prvky
+   ===================================================== */
+#tarteaucitronScrollbarAdjust {
+    display: none !important;
+}
+
+.tarteaucitronName br {
+    display: none !important;
+}
+
+#tac_title {
+    display: none !important;
+}
+
+/* =====================================================
+   SWITCH – izolace od Bootstrapu
+   ===================================================== */
+.tac-switch-wrap {
+    all: revert;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.tac-switch-track {
+    all: revert;
+    box-sizing: border-box;
+    position: relative !important;
+    display: inline-block !important;
+    width: 38px !important;
+    height: 23px !important;
+    background-color: var(--color-urgent-blue-10) !important;
+    border: 2px solid var(--color-urgent-blue-60) !important;
+    border-radius: 99px !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+}
+
+.tac-switch-thumb {
+    all: revert;
+    box-sizing: border-box;
+    position: absolute !important;
+    top: 2px !important;
+    left: 1px !important;
+    width: 15px !important;
+    height: 15px !important;
+    border-radius: 50% !important;
+    transition: transform 0.2s ease !important;
+    background-color: transparent !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%2366838F'/%3E%3Cline x1='5' y1='5' x2='11' y2='11' stroke='%23E5EAEC' stroke-width='1.8' stroke-linecap='round'/%3E%3Cline x1='11' y1='5' x2='5' y2='11' stroke='%23E5EAEC' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 15px 15px !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+}
+
+.tac-switch-track--on .tac-switch-thumb {
+    transform: translateX(17px) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%2366838F'/%3E%3C/svg%3E") !important;
+}
+
+.tac-switch-wrap--disabled .tac-switch-track {
+    cursor: default !important;
+    opacity: 0.6 !important;
+}
+
+.tac-switch-label {
+    display: none !important;
+}
+
+/* =====================================================
+   CHECKBOX – izolace od Bootstrapu
+   ===================================================== */
+.tac-checkbox-wrap {
+    all: revert;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.tac-checkbox {
+    all: revert;
+    box-sizing: border-box;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    border: 2px solid var(--color-urgent-blue-60) !important;
+    border-radius: 4px !important;
+    background-color: var(--color-urgent-blue-10) !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    vertical-align: middle !important;
+}
+
+.tac-checkbox--checked::after {
+    display: none !important;
+}
+
+.tac-checkbox--checked {
+    background-color: var(--color-urgent-blue-10) !important;
+    border-color: var(--color-urgent-blue-60) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%2366838F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M3 8 L6.5 11.5 L13 5'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 14px 14px !important;
+}
+
+
+/* =====================================================
+   COOKIES LIŠTA
+   ===================================================== */
+#tarteaucitronAlertBig {
+    position: fixed !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background-color: var(--color-urgent-blue) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 1rem 1.5rem !important;
+    box-sizing: border-box !important;
+    z-index: 99999 !important;
+}
+
+#tarteaucitronDisclaimerAlert {
+    flex: 1 1 auto;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+#tarteaucitronAlertBig .tarteaucitronCTAButton,
+#tarteaucitronAlertBig #tarteaucitronCloseAlert {
+    background: transparent !important;
+    border: 2px solid var(--color-bandage-white) !important;
+    color: var(--color-bandage-white) !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-size: 0.9rem !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+    white-space: nowrap;
+}
+
+#tarteaucitronAlertBig .tarteaucitronCTAButton:hover,
+#tarteaucitronAlertBig #tarteaucitronCloseAlert:hover {
+    background-color: var(--color-bandage-white) !important;
+    color: var(--color-urgent-blue) !important;
+}
+
+#tarteaucitronAlertBig .tarteaucitronCTAButton:focus-visible,
+#tarteaucitronAlertBig #tarteaucitronCloseAlert:focus-visible {
+    outline: 2px solid #fff !important;
+    outline-offset: 2px !important;
+}
+
+/* =====================================================
+   COOKIE IKONA
+   ===================================================== */
+#tarteaucitronIcon {
+    position: fixed !important;
+    bottom: 1rem !important;
+    right: 1rem !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: 99998 !important;
+}
+
+#tarteaucitronManager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+#tarteaucitronManager:hover {
+    opacity: 0.85;
+}
+
+#tarteaucitronManager img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* =====================================================
+   TAC MAGIC BLOCK
+   ===================================================== */
+.tarteaucitron-magic-block:not([style*="display: none"]):not([style*="display:none"]) {
+    display: block !important;
+    background-color: var(--color-bandage-white) !important;
+    border-radius: 16px !important;
+    padding: 1rem 1.5rem !important;
+    box-sizing: border-box !important;
+}
+
+.tarteaucitron-magic-block button.tarteaucitronAllow {
+    background-color: var(--color-bandage-white) !important;
+    color: var(--color-urgent-blue) !important;
+    border: 2px solid var(--color-urgent-blue) !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1.25rem !important;
+    cursor: pointer !important;
+    font-size: 0.9rem !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.tarteaucitron-magic-block button.tarteaucitronAllow:hover {
+    background-color: var(--color-urgent-blue) !important;
+    color: var(--color-bandage-white) !important;
+}
